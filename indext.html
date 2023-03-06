@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app"> </div>
+    <script>
+        console.log(window.Vue);
+        Vue.createApp({
+            data(){
+                return {
+                    text: "HappyLog",
+                    sun_img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDSt7tGRmiehClAlMpzzi1_jbitO5rpackUQ&usqp=CAU",
+                    counter:0,
+                    msg: "Hoy comí helado",
+                    firstName:"Claudio",
+                    lastName:"Mallea",
+                    open:false,
+                    puerta_status:"puerta cerrada"
+                };
+            },
+            computed:{
+                fullName(){
+                    return this.firstName+" "+this.lastName
+                }
+            }
+            ,
+            methods:{
+                increment(){
+                    this.counter++;
+                },
+                input(e){
+
+                    this.msg = e.target.value;
+                    console.log(e)
+                }
+
+            },
+            watch:{
+                text(){
+                    console.log()
+                },
+                open(value){
+                    if(value){
+                        this.puerta_status = "puerta abierta";
+                    }
+                    else{
+                        this.puerta_status = "puerta cerrada";
+                    }
+                }
+            },
+            template: `
+                       <div v-text="text"> </div> 
+                       <p>Hola {{fullName}}</p>
+                       <img :src="sun_img" :alt="sun_img"/> 
+                       <button @click="increment"> {{counter}} </button>
+                       <p>{{msg}}</p>
+                       <input type="text" v-model="msg"/>
+                       <button @click="open =!open" v-text="puerta_status"  > </button>
+                       `
+
+
+        }).mount("#app");
+    </script>
+</body>
+</html>
+
+

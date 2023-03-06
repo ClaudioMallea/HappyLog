@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./styleListado.css">
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app">
+
+
+    </div>
+
+    <script>
+        const app= Vue.createApp({
+            data(){
+                return{
+                    posts: [{id:0,msg:"Hoy comí helado", level:2},{id:1,msg:"Hoy fuí al cine", level:3}]
+
+                }
+            },
+            computed:{
+
+                happy_levels_face(){
+                    return this.posts.map(p=>{
+
+                        switch(p.level){
+                        case 0:
+                            return {...p, level:"😐"};
+                            break;
+                        case 1:
+                            return {...p, level:"🙂"};
+                            break;
+                        case 2:
+                            return {...p, level:"😊"};
+                            break;
+                        case 3:
+                            return {...p, level:"😃"};
+                            break;
+                        case 4:
+                            return {...p, level:"😁"};
+                            break;
+                        
+                    }
+
+
+                    })
+
+                }},
+            template:`<div class="container">
+                        <div v-for="post in happy_levels_face">
+                            
+                            <p>{{post.level}}</p>
+                            <p>{{post.msg}}</p>
+                        </div> 
+                      </div>`
+            
+
+        })
+        const vm = app.mount("#app");
+
+    </script>
+</body>
+</html>

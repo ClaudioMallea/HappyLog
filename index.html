@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css"/>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app"> </div>
+    <script>
+        
+        const app = Vue.createApp({
+            data(){
+                return {
+                    text: "HappyLog",
+                    sun_img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDSt7tGRmiehClAlMpzzi1_jbitO5rpackUQ&usqp=CAU",
+                    counter:0,
+                    msg: "Hoy comí helado",
+                    firstName:"Claudio",
+                    lastName:"Mallea",
+                    open:false,
+                    puerta_status:"puerta cerrada",
+                    happy_levels: [{id:1, face:"😐"}, {id:2, face:"🙂"}, {id:3, face:"😊"}, {id:3, face:"😃"}, {id:3, face:"😁"}],
+                    
+                };
+            },
+            computed:{
+                fullName(){
+                    return this.firstName+" "+this.lastName
+                }
+            }
+            ,
+            methods:{
+                increment(){
+                    this.counter++;
+                },
+                input(e){
+
+                    this.msg = e.target.value;
+                    console.log(e)
+                },
+                happy_level_selected(e){
+                    this.happy_level_select=e.target.value;
+                }
+
+            },
+            watch:{
+                text(){
+                    console.log()
+                },
+                open(value){
+                    if(value){
+                        this.puerta_status = "puerta abierta";
+                    }
+                    else{
+                        this.puerta_status = "puerta cerrada";
+                    }
+                }
+            },
+            template: `
+                <div class="container">
+                    <div class="card">
+                        <h2>HappyLog</h2>
+                        <v-msg/>
+                        <v-happy-selector v-bind:happy_levels ="happy_levels"/> 
+                        <div class="buttonContainer">
+                                <button class="button">Enviar</button>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="homeButton">Ir al Home</div>
+                </div>
+                       `
+
+
+        })
+        app.component("v-happy-selector",{
+            props:["happy_levels"],
+
+            template:`  <div class="happySelector">
+                            <label v-for="item in happy_levels"  class="checkBoxSection">
+                                <p>{{item.face}}</p>
+                                <input v-on:click="happy_level_selected"  name="happy_level" type="radio"/>
+                            </label>
+                        </div>`
+
+
+        })
+        app.component("v-msg",{
+
+            template:`  <p>Escribe algo feliz que te haya pasado hoy:</p>
+                        <textarea  class="msg" />`
+
+        })
+
+        const vm= app.mount("#app");
+    </script>
+</body>
+</html>
