@@ -21,10 +21,10 @@
   nav{
     display:flex;
     justify-content: space-between;
-    background-color:rgba(61, 214, 74, 0.578);
+    background-color:#7BD09F;
     width:100%;
     height:60px;
-    border:1px solid gray;
+    border-bottom: 1px solid black;
     
     } 
  .leftSection{

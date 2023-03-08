@@ -10,13 +10,19 @@ export default {
 }
 </script>
 
-<style>
+<style >
+
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"), url(./assets/fonts/Lato-Regular.ttf) format("truetype");
+}
 
 body {
-    overflow:hidden;
-    height:100vh;
+    overflow-y:auto;
+    width:100%;
+    height:100%;
     margin: 0;
-    background: linear-gradient(to top right,#E4E784, #00B5BF);
-    font-family: "Arial";
+    background: #F0F0F3 ;
+    font-family: "Lato";
 }
 </style>
