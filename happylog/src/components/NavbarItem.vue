@@ -21,7 +21,7 @@
   nav{
     display:flex;
     justify-content: space-between;
-    background-color:#7BD09F;
+    background-color:#00B388;
     width:100%;
     height:60px;
     border-bottom: 1px solid black;

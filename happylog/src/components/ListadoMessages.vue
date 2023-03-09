@@ -1,22 +1,37 @@
 <template>
     <div >
         <NavbarItem/>
-        <div>
+        <div class="MassiveContainer">
             <header>
-                <h2>Listado de mensajes:</h2>
-                <div > asd</div>
+                <h1>Listado de mensajes:</h1>
+                <div class="orderButtons" > 
+                    <SelectButton></SelectButton>
+                    
+
+                </div>
             </header>
             <div class="container">
                 
                 <div class="card" v-for=" (post,index) in happy_levels_face" :key="index">
                     <div class="containerContent">
-                        <p class="level">{{post.level}}</p>
+                        <p class="level">
+                            {{post.level}} 
+                        </p>
                         
-                        <p class="PostMessage">{{post.msg}}</p>
+                        <p class="PostMessage">
+                            
+                            {{post.msg}}
+                        </p>
                         
                         
                         <footer>
-                            1/1/2022
+                            <div>
+                                <p>Level: 1</p>
+                            </div>
+                            <div>
+                                <p>1/1/2022 </p>
+                            </div>
+                            
                         </footer> 
                     </div>
                 </div> 
@@ -27,11 +42,12 @@
 
 <script>
 import NavbarItem from './NavbarItem.vue';
+import SelectButton from './SelectButton.vue';
     export default {
         name:"ListadoMessages",
         components:{
             NavbarItem,
-        
+            SelectButton,
         },
         data(){
                 return{
@@ -70,57 +86,97 @@ import NavbarItem from './NavbarItem.vue';
 body{
     background-color: red;
 }
+.MassiveContainer{
+    width:100%;
+
+}
 header{
     display:flex;
     justify-content: space-between;
     align-items:center;
     width:60%;
-
+    height:150px;
+}
+header h1{
+    margin-left:20%;
 }
 .container{
     display:grid;
-    margin-left:100px;
     grid-template-columns: repeat(5,200px);
     grid-auto-rows: 200px;
-    justify-content: flex-start;
+    justify-content: center;
     column-gap: 10px;
-    row-gap:10px;
-    width:100%;
+    row-gap:10px;   
     height:900px;
 }
+
+
+
+/* .orderButtons div span{
+    align-self:flex-end;
+} */
 .card{
-    
+    overflow:hidden;
     background-color:white;
     width:100%;
     right:100%;
     border-radius:15px;
-    border:1px solid #7BD09F;
+    border:1px solid #00B388;
+}
+.card:hover{
+    opacity:0.8;
+    cursor:pointer;
 }
 
-
-.card  .level{
-    margin: auto 0;
-    margin-top:20px;
-    font-size:50px;
-    text-align:center;
-}
-.card footer{
-border-top:1px solid #7BD09F;
-}
 .card .containerContent{
+    overflow:hidden;
     height:100%;
     display:flex;
     flex-direction: column;
 }
-.containerContent .PostMessage{
-    max-height:20px;
-    height:20px;
-    overflow:hidden;
+.containerContent  .level{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    background-color:#00B388;
+    height:120px;
+    margin: auto 0;
+    font-size:60px;
+    text-align:center;
 }
-.card footer{
+
+.containerContent .PostMessage{
+    
+    max-height:80px;
+    height:80px;
+    overflow:hidden;
+    padding:0 5px;
+}
+.containerContent footer{
+    display:flex;
+    border-top:1px solid #00B388;
     overflow:hidden;
     align-self:flex-end;
     width:100%;
     height:30px;
 }
+
+footer div{
+    width:50%;
+    
+
+}
+footer div:nth-child(1){
+    border-right:1px solid #00B388;
+}
+footer div:nth-child(2){
+    
+}
+footer p{
+    margin: 0 0;
+    color:gray;
+    text-align:center;
+}
+
+
 </style>
