@@ -1,7 +1,7 @@
 <template>
     <nav>
         <section class="leftSection">
-            <p>HappyLog</p>
+            <img src="../assets/LogoBig.png"/>
             <p>Listado</p>
         </section>
         <section class ="rightSection">

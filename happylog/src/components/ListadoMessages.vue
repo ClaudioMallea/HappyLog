@@ -126,6 +126,7 @@ header h1{
 .card:hover{
     opacity:0.8;
     cursor:pointer;
+    z-index:0;
 }
 
 .card .containerContent{

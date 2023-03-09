@@ -33,7 +33,9 @@
                     this.visible = ["visibilityOn"]
                 }
                 
-            }
+            },
+            
+
         }
     }
 </script>
@@ -73,6 +75,7 @@
         justify-content: center;
     }
     section{
+        z-index:1000;
         width:200px;
         background-color:white;
         position:absolute;
@@ -83,7 +86,7 @@
         cursor:pointer;
     }
     section label p{
-        margin:5px auto;
+        margin:10px auto;
         text-align:left;
         padding-left:20px;
     }
