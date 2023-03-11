@@ -10,8 +10,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
-library.add(faChevronDown)
+import { faChevronDown, faCircleUser } from '@fortawesome/free-solid-svg-icons'
+library.add(faChevronDown, faCircleUser)
 const routes = [
     
         {path:"/", component:MessageSection},

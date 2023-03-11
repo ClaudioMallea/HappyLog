@@ -1,12 +1,16 @@
 <template>
    <div class="container">
        <div class="card">
-           <h2>HappyLog</h2>
-           <MessageInput/> 
-           <HappySelector v-bind:happy_levels ="happy_levels"/> 
-           <div class="buttonContainer">
-                   <button class="button">Enviar</button>
-           </div>        
+           <header>
+                <img src="../assets/LogoBigCorrect.png"/>
+           </header>
+           <section>
+                <MessageInput/> 
+                <HappySelector v-bind:happy_levels ="happy_levels"/> 
+                <div class="buttonContainer">
+                        <button class="button" @click="goToHome">Enviar</button>
+                </div>  
+           </section>      
        </div>
        <div class="homeButton">Ir al Home</div>
    </div>
@@ -52,6 +56,9 @@ export default {
       },
       happy_level_selected(e){
           this.happy_level_select=e.target.value;
+      },
+      goToHome(){
+        this.$router.push('/listado')
       }
   },
   watch:{
@@ -85,27 +92,45 @@ export default {
 }
 
 .card{
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
     width:400px;
     box-shadow: 2px 4px 5px black;
     background-color: white;
     border-radius:20px;
+   
+}
+.card header{
+    width:100%;
+    background-color:#00B388;
+    height:84px;
+    
+}
+.card header img{
+    margin-left:10px;
+    width:200px;
+    height:auto;
+}
+.card section{
     padding:20px;
 }
-.card .msg{
+/* .card .msg{
     width: 100%;
     max-width: 100%;
-}
+} */
 
-.card .happySelector{
+/* .card HappySelector{
     display:flex;
     justify-content: space-around;
-}
+    background-color:red;
+} */
 .card .buttonContainer{
     display:flex;
     justify-content: flex-end;
     margin-top:30px;
 }
-.card .checkBoxSection{
+/* .card .checkBoxSection{
     margin-top:15px;
     font-size:35px;
     width:30px;
@@ -115,13 +140,8 @@ export default {
     align-items: center;
 
 
-}
-.card .checkBoxSection p{
-    margin:0px;
-}
-.card .checkBoxSection input{
-    margin:0px;
-}
+} */
+
 .card .button{
     background-color: #4CAF50; /* Green */
     border: none;

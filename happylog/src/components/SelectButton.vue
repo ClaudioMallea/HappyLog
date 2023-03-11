@@ -9,8 +9,8 @@
 
     </div>
     <section  :class="visible">
-            <label v-for="(sort,index) in typeOfSorts" :key="index">
-                <p >{{ sort }} </p>
+            <label v-for="(sort,index) in typeOfSorts" :key="index" >
+                <p >{{ sort.name }} </p>
             </label>
     </section>
 </template>
@@ -18,9 +18,10 @@
 <script>
     export default {
         name:"SelectButton",
+        props:["typeOfSorts"],
         data(){
+            
             return{
-                typeOfSorts: ["Más reciente","Más antiguo", "Mayor nivel", "Menor nivel", ],
                 visible:[],
             }
         },
@@ -34,6 +35,16 @@
                 }
                 
             },
+            handleClickSort(e){
+                console.log(e)
+            },
+            mostRecent(){
+                console.log("mostRecent")
+            },
+            // emitSortFunction(sortFunction){
+            //     this.$emit("sortFunction",sortFunction)
+            //     console.log(sortFunction)
+            // }
             
 
         }

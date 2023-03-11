@@ -14,6 +14,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.happySelector{
+display:flex;
+justify-content:space-around;
+}
+.checkBoxSection p{
+    margin:0px;
+}
+.checkBoxSection input{
+    margin:0px;
+}
+.checkBoxSection{
+    margin-top:15px;
+    font-size:35px;
+    width:30px;
+    display:flex;
+    flex-direction: column;
+    
+    align-items: center;
 
+
+}
 </style>

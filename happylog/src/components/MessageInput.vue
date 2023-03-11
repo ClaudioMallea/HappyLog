@@ -11,6 +11,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.msg{
+    width: 100%;
+    max-width: 100%;
+}
 </style>

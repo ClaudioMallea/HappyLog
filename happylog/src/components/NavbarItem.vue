@@ -1,11 +1,12 @@
 <template>
     <nav>
         <section class="leftSection">
-            <img src="../assets/LogoBig.png"/>
-            <p>Listado</p>
+            <img @click = "goToMessageSection" src="../assets/LogoBigCorrect.png"/>
+            
         </section>
         <section class ="rightSection">
             <p>claudiomallea.a@gmail.com</p>
+            <font-awesome-icon class="fa-xl" icon="fa-solid fa-circle-user" />
         </section>
         
     </nav>
@@ -14,6 +15,12 @@
 <script>
     export default {
         name:"NavbarItem",
+        methods:{
+            goToMessageSection(){
+                console.log("asdasdasd")
+                this.$router.push('/')
+            }
+        }
     }
 </script>
 
@@ -30,11 +37,16 @@
  .leftSection{
     display:flex;
     justify-content: space-around;
-    width:400px;
+    width:300px;
+ }
+ .leftSection img{
+    cursor:pointer;
  }
  .rightSection{
     display:flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items:center;
     width:300px;
+    margin-right:20px;
  }
 </style>
