@@ -5,14 +5,20 @@
             <header>
                 <h1>Listado de mensajes:</h1>
                 <div class="orderButtons" > 
-                    <SelectButton :typeOfSorts="typeOfSorts"></SelectButton>
-                    
+                    <div>
+                        <p>Ordenar por:</p>
+                        <SelectButton :options="typeOfSorts" @clickOption="clickOption" :firstValue="typeOfSorts.sorts[selected_sort].name"></SelectButton>
+                    </div>
+                    <div>
+                        <p>Periodo:</p>
+                        <SelectButton :options="periodsWithDataNamed" @clickOption="clickOption" :firstValue="periodsWithDataNamed.months[0].name"></SelectButton>
+                    </div>
 
                 </div>
             </header>
             <div class="container">
                 
-                <div class="card" v-for=" (post,index) in happy_levels_face" :key="index">
+                <div class="card" v-for=" (post,index) in happy_levels" :key="index">
                     <div class="containerContent">
                         <p class="level">
                             {{post.face}} 
@@ -29,7 +35,7 @@
                                 <p>Level: {{post.level}}</p>
                             </div>
                             <div>
-                                <p>1/1/2022 </p>
+                                <p>{{post.date}}</p>
                             </div>
                             
                         </footer> 
@@ -51,34 +57,148 @@ import SelectButton from './SelectButton.vue';
         },
         data(){
                 return{
-                    posts: [{id:0,msg:"Horticipé en la ferparticipé en la ferparticipé en la fer en la feria de la Coloma, fui al cine y comi cabritas, bla bla blaablaa bla bla", level:2},{id:10,msg:"Hoy fuí al cine", level:3},{id:9,msg:"Hoy fuí al cine", level:3},{id:8,msg:"Hoy fuí al cine", level:3},{id:7,msg:"Hoy fuí al cine", level:3},{id:6,msg:"Hoy fuí al cine", level:3},{id:5,msg:"Hoy fuí al cine", level:3},{id:1,msg:"Hoy fuí al cine", level:3},{id:2,msg:"Hoy fuí al cine", level:3},{id:4,msg:"Hoy fuí al cine", level:3}],
-                    typeOfSorts: {1:{name:"Más reciente"},2:{name:"Más antiguo"},3:{name:"Mayor nivel"},4:{name:"Menor nivel"}},
-
+                    posts: [{id:1,msg:"Horticipé en la y comi cabritas", level:2, date:new Date(2022,1,1)},
+                            {id:11,msg:"blablabla", level:3, date:new Date(2022,1,1)},
+                            {id:10,msg:"Hoy fuí al cine", level:3, date:new Date(2022,1,1)},
+                            {id:9,msg:"Testing testing", level:3, date:new Date(2022,1,1)},
+                            {id:8,msg:"Hoy fuí al cine", level:2, date:new Date(2022,1,1)},
+                            {id:7,msg:"Hoy comí pizza", level:4, date:new Date(2022,0,1)},
+                            {id:6,msg:"Hoy fuí al cine", level:3, date:new Date(2022,2,1)},
+                            {id:2,msg:"Hoy fuí al cine", level:3, date:new Date(2022,1,1)},
+                            {id:3,msg:"Hoy fuí al cine", level:3, date:new Date(2022,1,1)},
+                            {id:5,msg:"Hoy fuí al cine", level:3, date:new Date(2022,1,1)}],
+                    typeOfSorts: {sorts:{1:{name:"Más reciente"},2:{name:"Más antiguo"},3:{name:"Mayor nivel"},4:{name:"Menor nivel"}}},
+                    months:{months:{1:{name:"Enero"},2:{name:"Febrero"},3:{name:"Marzo"},4:{name:"Abril"},5:{name:"Mayo"},6:{name:"Junio"},7:{name:"Julio"},8:{name:"Agosto"},9:{name:"Septiembre"},10:{name:"Octubre"},11:{name:"Noviembre"},12:{name:"Diciembre"}}},
+                    selected_sort:1,
+                    selected_period:0,
+                    firstValue:["Ordenar por:","Filtrar por:"],
                 }
             },
         computed:{
-            happy_levels_face(){
-                return this.posts.map(p=>{
+            happy_levels(){
+                let with_faces = this.posts.map(p=>{
 
-                    switch(p.level){
-                    case 0:
-                        return {...p, face:"😐"};
-                        
-                    case 1:
-                        return {...p, face:"🙂"};
-                    case 2:
-                        return {...p, face:"😊"};
-                    case 3:
-                        return {...p, face:"😃"};
-                    case 4:
-                        return {...p, face:"😁"};
-                    
-                }
+                                        switch(p.level){
+                                        case 0:
+                                            return {...p, face:"😐"};
+                                            
+                                        case 1:
+                                            return {...p, face:"🙂"};
+                                        case 2:
+                                            return {...p, face:"😊"};
+                                        case 3:
+                                            return {...p, face:"😃"};
+                                        case 4:
+                                            return {...p, face:"😁"};
+                                        
+                                        }
+                                    })
+                
+               
 
+                //Filters
+                console.table(with_faces);
+                with_faces = with_faces.filter(p=>{
+                    if(this.selected_period == 0){
+                        return true;
+                    }
+
+                    let fecha = p.date;
+                    let periodo_elegido = this.periodsWithData.months[this.selected_period]
+                    return fecha.getMonth() == periodo_elegido.getMonth() && fecha.getYear() == periodo_elegido.getYear()
 
                 })
+                
+                //Sorts
+                with_faces.sort(this.sortList(this.selected_sort));
+                return with_faces.map((p)=>{
+                                    return{...p, date: p.date.toLocaleDateString() }})
+                        
 
-            }},
+            },
+            periodsWithData(){
+                let firstPeriod = this.firstPeriod()
+                firstPeriod.setDate(1);
+                let currentDate = new Date();
+                let periods = [new Date(firstPeriod)]
+                
+                while(firstPeriod.setMonth(firstPeriod.getMonth()+1) < currentDate ){
+                    periods.unshift(new Date(firstPeriod));
+                }
+                periods = periods.reduce((acc,value, index)=>{
+                    let copy_acc = {...acc};
+                    copy_acc[index+1] = value;
+                    return copy_acc
+                },{})
+                return {months:periods}
+            },
+            periodsWithDataNamed(){
+                let periods= Object.values(this.periodsWithData.months).reduce((acc,value,index)=>{
+
+                    let copy_acc ={...acc};
+                    let value_string = value.toLocaleString('es-ES', { month: 'short', year: 'numeric' });
+                    const capitalized = value_string.charAt(0).toUpperCase() + value_string.slice(1)
+                    copy_acc[index+1] = {name:capitalized};
+                    return copy_acc
+                },{})
+                periods[0]={name:"Todos"}
+                return {"months":periods}
+                
+            },
+        },
+
+        methods:{
+            sortList(id){
+                // eslint-disable-next-line no-unused-vars
+                if(id==0){
+                    // eslint-disable-next-line no-unused-vars
+                    return function(a,b){
+                        return 0;
+                    }
+                }
+                else if(id==1){
+                    // eslint-disable-next-line no-unused-vars
+                    return function(a,b){
+                        return b.date - a.date;
+                    }
+                }
+                else if(id==2){
+                    // eslint-disable-next-line no-unused-vars
+                    return function(a,b){
+                        return a.date - b.date;
+                    }
+                }
+                else if(id==3){
+                    // eslint-disable-next-line no-unused-vars
+                    return function(a,b){
+                        return b.level - a.level
+                    }
+                }
+                else if(id==4){
+                    // eslint-disable-next-line no-unused-vars
+                    return function(a,b){
+                        return a.level - b.level
+                    }
+                }
+
+            },
+            firstPeriod(){
+                let copy_posts = structuredClone(this.posts);
+                return copy_posts.reduce((acc,value)=> value.date < acc? value.date : acc, new Date());   
+            },
+            clickOption(id,clickOption){
+
+                if(clickOption==='sorts'){
+                    this.selected_sort = id;
+                }
+                else if(clickOption==='months'){
+                    this.selected_period = id;
+                }
+                
+                
+            },
+
+        }
 
     }
 </script>
@@ -95,7 +215,7 @@ header{
     display:flex;
     justify-content: space-between;
     align-items:center;
-    width:60%;
+    width:76%;
     height:150px;
 }
 header h1{
@@ -114,9 +234,19 @@ header h1{
 
 
 
-/* .orderButtons div span{
-    align-self:flex-end;
-} */
+.orderButtons{
+    display:flex;
+    justify-content: space-around;
+    width:650px;
+} 
+.orderButtons div{
+    display:flex;
+    
+}
+.orderButtons div > p{
+    margin-right:10px;
+    
+}
 .card{
     overflow:hidden;
     background-color:white;

@@ -1,52 +1,62 @@
 <template>
-    <div class="orderBy" v-on:click="toggleShow">
-        <div>
-            <p>Último Registro</p>
-        </div>
-        <div>
-            <font-awesome-icon icon="fa-solid fa-chevron-down" />
-        </div>
+    <div class="containerSelect">
+        <div class="orderBy" v-on:click="toggleShow">
+            <div>
+                <p v-if="selected_value">{{selected_value}}</p>
+                <p v-else>{{firstValue}}</p>
+            </div>
+            <div>
+                <font-awesome-icon icon="fa-solid fa-chevron-down" />
+            </div>
 
+        </div>
+        <section  :class="visible" v-click-outside="closeList">
+                <label v-for="(sort,index) in some_options" :key="index" @click = "clickOption(index,typeOfOption)" >
+                    <p >{{ sort.name }} </p>
+                </label>
+        </section>
     </div>
-    <section  :class="visible">
-            <label v-for="(sort,index) in typeOfSorts" :key="index" >
-                <p >{{ sort.name }} </p>
-            </label>
-    </section>
 </template>
 
 <script>
     export default {
         name:"SelectButton",
-        props:["typeOfSorts"],
+        props:["options","firstValue"],
+        emits: ['clickOption'],
         data(){
             
             return{
-                visible:[],
+                visible:"",
+                selected_value:"",
+                
+            }
+        },
+        computed:{
+            some_options(){
+                return Object.values(this.options)[0];
+            },
+            typeOfOption(){
+                return Object.keys(this.options)[0];
             }
         },
         methods:{
             toggleShow(){
-                if(this.visible.includes("visibilityOn")){
-                    this.visible = ["visibilityOff"]
+                if(this.visible==="visibilityOn"){
+                    this.visible = "visibilityOff"
                 }
                 else{
-                    this.visible = ["visibilityOn"]
+                    this.visible = "visibilityOn"
                 }
                 
             },
-            handleClickSort(e){
-                console.log(e)
+            clickOption(index,typeOfOption){
+                this.$emit("clickOption", index,typeOfOption )
+                this.selected_value = this.some_options[index].name;
+                this.visible="visibilityOff"
             },
-            mostRecent(){
-                console.log("mostRecent")
-            },
-            // emitSortFunction(sortFunction){
-            //     this.$emit("sortFunction",sortFunction)
-            //     console.log(sortFunction)
-            // }
-            
-
+            closeList(){
+                this.visible = "visibilityOff"
+            }
         }
     }
 </script>
@@ -54,6 +64,9 @@
 <style  scoped>
     *{
     margin:0 0;
+    }
+    .containerSelect{
+        position:relative;
     }
     .orderBy{
         width:200px;
@@ -90,6 +103,7 @@
         width:200px;
         background-color:white;
         position:absolute;
+        top:42px;
         border-radius:5px;
         visibility: hidden;
     }
