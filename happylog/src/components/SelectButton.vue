@@ -1,5 +1,5 @@
 <template>
-    <div class="containerSelect">
+    <div class="containerSelect" v-click-outside-element="closeList">
         <div class="orderBy" v-on:click="toggleShow">
             <div>
                 <p v-if="selected_value">{{selected_value}}</p>
@@ -10,7 +10,7 @@
             </div>
 
         </div>
-        <section  :class="visible" v-click-outside="closeList">
+        <section  :class="visible" >
                 <label v-for="(sort,index) in some_options" :key="index" @click = "clickOption(index,typeOfOption)" >
                     <p >{{ sort.name }} </p>
                 </label>

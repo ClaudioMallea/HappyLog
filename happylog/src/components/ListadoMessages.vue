@@ -7,7 +7,7 @@
                 <div class="orderButtons" > 
                     <div>
                         <p>Ordenar por:</p>
-                        <SelectButton :options="typeOfSorts" @clickOption="clickOption" :firstValue="typeOfSorts.sorts[selected_sort].name"></SelectButton>
+                        <SelectButton   :options="typeOfSorts" @clickOption="clickOption" :firstValue="typeOfSorts.sorts[selected_sort].name"></SelectButton>
                     </div>
                     <div>
                         <p>Periodo:</p>
@@ -97,7 +97,6 @@ import SelectButton from './SelectButton.vue';
                
 
                 //Filters
-                console.table(with_faces);
                 with_faces = with_faces.filter(p=>{
                     if(this.selected_period == 0){
                         return true;
@@ -145,6 +144,7 @@ import SelectButton from './SelectButton.vue';
                 return {"months":periods}
                 
             },
+
         },
 
         methods:{
@@ -197,6 +197,10 @@ import SelectButton from './SelectButton.vue';
                 
                 
             },
+            hide(){
+                console.log("ajajajajAADWAWD")
+                return true
+            },  
 
         }
 
@@ -241,6 +245,7 @@ header h1{
 } 
 .orderButtons div{
     display:flex;
+    align-items:center;
     
 }
 .orderButtons div > p{
