@@ -16,7 +16,7 @@
 
                 </div>
             </header>
-            <div class="container">
+            <div class="container" v-if="happy_levels.length !==0">
                 
                 <div class="card" v-for=" (post,index) in happy_levels" :key="index">
                     <div class="containerContent">
@@ -41,6 +41,10 @@
                         </footer> 
                     </div>
                 </div> 
+            </div>
+            <div class ="containerElse" v-else>
+                <p v-if = "posts.length==0">No haz hecho ningún registro todavía 👁️👄👁️ </p>
+                <p v-else >No existen registros en este periodo ¯\_(ツ)_/¯</p>
             </div>
         </div>
     </div>
@@ -235,7 +239,11 @@ header h1{
     height:900px;
     max-width:1400px;
 }
-
+.containerElse{
+    margin-left:100px;
+    color:gray;
+    font-size:large;
+}
 
 
 .orderButtons{
